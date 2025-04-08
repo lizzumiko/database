@@ -1,7 +1,6 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WebStore.Assignments;
-//using WebStore.Entities;
+using WebStore.Entities;
 
 namespace WebStore
 {
@@ -9,34 +8,20 @@ namespace WebStore
     {
         static async Task Main(string[] args)
         {
-
-            /* TODO: Uncomment this code after generating the entity models
-
             using var context = new WebStoreContext();
 
+            var assignments = new LinqQueriesAssignment(context);
 
-            var Assigments = new LinqQueriesAssignment(context);
-
-            await Assigments.Task01_ListAllCustomers();
-
-            await Assigments.Task02_ListOrdersWithItemCount();
-
-            await Assigments.Task03_ListProductsByDescendingPrice();
-
-            await Assigments.Task04_ListPendingOrdersWithTotalPrice();
-
-            await Assigments.Task05_OrderCountPerCustomer();
-
-            await Assigments.Task06_Top3CustomersByOrderValue();
-
-            await Assigments.Task07_RecentOrders();
-
-            await Assigments.Task08_TotalSoldPerProduct();
-
-            await Assigments.Task09_DiscountedOrders();
-
-            await Assigments.Task10_AdvancedQueryExample();
-            */
+            await assignments.Task01_ListAllCustomers();
+            await assignments.Task02_ListOrdersWithItemCount();
+            await assignments.Task03_ListProductsByDescendingPrice();
+            await assignments.Task04_ListPendingOrdersWithTotalPrice();
+            await assignments.Task05_OrderCountPerCustomer();
+            await assignments.Task06_Top3CustomersByOrderValue();
+            await assignments.Task07_RecentOrders();
+            await assignments.Task08_TotalSoldPerProduct();
+            await assignments.Task09_DiscountedOrders();
+            await assignments.Task10_AdvancedQueryExample();
 
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
