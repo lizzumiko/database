@@ -33,6 +33,8 @@ public partial class WebStoreContext : DbContext
 
     public virtual DbSet<Store> Stores { get; set; }
 
+    public virtual DbSet<Carrier> Carriers { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
@@ -153,6 +155,13 @@ public partial class WebStoreContext : DbContext
                 .HasMaxLength(20)
                 .HasColumnName("order_status");
             entity.Property(e => e.ShippingAddressId).HasColumnName("shipping_address_id");
+            entity.Property(e => e.TrackingNumber)
+                .HasColumnName("tracking_number")
+                .HasMaxLength(50);
+            entity.Property(e => e.ShippedDate)
+                .HasColumnName("shipped_date");
+            entity.Property(e => e.DeliveredDate)
+                .HasColumnName("delivered_date");
 
             entity.HasOne(d => d.BillingAddress).WithMany(p => p.OrderBillingAddresses)
                 .HasForeignKey(d => d.BillingAddressId)
@@ -297,6 +306,29 @@ public partial class WebStoreContext : DbContext
             entity.Property(e => e.Street)
                 .HasMaxLength(100)
                 .HasColumnName("street");
+        });
+
+        modelBuilder.Entity<Carrier>(entity =>
+        {
+            entity.HasKey(e => e.CarrierId).HasName("carriers_pkey");
+
+            entity.ToTable("carriers");
+            entity.Property(e => e.CarrierName)
+                .HasMaxLength(50)
+                .HasColumnName("carrier_name");
+
+            entity.Property(e => e.ContactUrl)
+                .HasMaxLength(50)
+                .HasColumnName("contact_url");
+
+            entity.Property(e => e.ContactPhone)
+                .HasMaxLength(50)
+                .HasColumnName("contact_phone");
+
+            entity.HasMany(c => c.Orders)
+                .WithOne(o => o.Carrier)
+                .HasForeignKey(o => o.CarrierId)
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         OnModelCreatingPartial(modelBuilder);
